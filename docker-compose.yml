@@ -1,0 +1,22 @@
+version: '3'
+services:       
+    app:
+        build:
+            dockerfile: Dockerfile
+            context: docker-apache
+        image: moodle-apache
+        container_name: moodle-apache
+        ports:
+            - "8082:80"
+        restart: always
+        volumes:
+            - ./:/var/www/html
+            - ./docker-apache/moodle.conf:/etc/apache2/sites-available/moodle.conf
+            - ./docker-apache/dir.conf:/etc/apache2/mods-available/dir.conf
+        networks:
+            moodle-apache-mssql:      
+
+networks:
+  moodle-apache-mssql:
+    driver: bridge
+    name: moodle-apache-mssql
